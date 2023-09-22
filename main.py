@@ -27,10 +27,12 @@ async def on_message(message):
 campaigns = {}
 
 def get_campaign(ctx):
-    id = ctx.guild.id
-    if not id in campaigns:
-        campaigns[id] = Campaign(id)
-    return campaigns[id]
+    key = ctx.guild.id
+    # Future: some guilds might want separate campaigns per channel
+    # channel=ctx.channel.name, cid=ctx.channel.id
+    if not key in campaigns:
+        campaigns[key] = Campaign(key)
+    return campaigns[key]
 
 bot = discord.Bot()
 
@@ -43,8 +45,11 @@ async def on_ready():
 async def arms(ctx, name: str):
     campaign = get_campaign(ctx)
     arms = campaign.arms()
-    armsPath = arms.path(name)
-    await ctx.respond('Guild: {guild} ({id}). Arms for {name}:'.format(guild=ctx.guild.name, id=ctx.guild.id, name=name), file=discord.File(armsPath))
+    if not arms.exists(name):
+        await ctx.send_response('No known Coat of Arms for {name}'.format(name=name), ephemeral=True)
+        return
+    await ctx.send_response(file=discord.File(arms.path(name)))
+    await ctx.respond('Guild: {guild} ({id}). Channel: {channel} ({cid}). Arms for {name}:'.format(guild=ctx.guild.name, id=ctx.guild.id, channel=ctx.channel.name, cid=ctx.channel.id, name=name), ephemeral=True)
 
 #client.run(os.getenv('TOKEN'))
 bot.run(os.getenv('TOKEN'))
