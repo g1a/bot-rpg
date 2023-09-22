@@ -30,10 +30,8 @@ async def on_ready():
 @bot.slash_command(name="arms", description="Show Coat of Arms for a player or NPC", guild_ids=['857097491131662346'])
 @option("name", description="Player or NPC")
 async def arms(ctx, name: str):
-    await ctx.respond("Hello, {name}!".format(name=name))
     armsPath = '{base}/Arms/{name}.png'.format(base=pathlib.Path(__file__).parent.resolve(), name=name)
-    # await ctx.respond('name is {name} and arms path is {path}'.format(name=name, path=armsPath))
-    await ctx.respond(file=discord.File(armsPath))
+    await ctx.respond('Arms for {name}:'.format(name=name), file=discord.File(armsPath))
 
 #client.run(os.getenv('TOKEN'))
 bot.run(os.getenv('TOKEN'))
