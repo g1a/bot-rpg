@@ -1,0 +1,11 @@
+[Unit]
+Description=A utility Discord bot to help game masters run role-playing games
+After=network.target mysql.service
+
+[Service]
+User=bot-rpg
+ExecStart=/usr/local/bin/bot-rpg
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
