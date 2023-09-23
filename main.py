@@ -7,23 +7,6 @@ from discord import option
 from arms import Arms
 from campaign import Campaign
 
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
-
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
 campaigns = {}
 
 def get_campaign(ctx):
@@ -70,8 +53,7 @@ async def arms(ctx, name: str):
     if not arms.exists(name):
         await ctx.send_response('No known Coat of Arms for {name}'.format(name=name), ephemeral=True)
         return
-    await ctx.send_response(file=discord.File(arms.path(name)))
-    await ctx.respond('Guild: {guild} ({id}). Channel: {channel} ({cid}). Arms for {name}:'.format(guild=ctx.guild.name, id=ctx.guild.id, channel=ctx.channel.name, cid=ctx.channel.id, name=name), ephemeral=True)
+    await ctx.send_response('Arms for {name}:'.format(name=name), file=discord.File(arms.path(name)))
 
 @bot.slash_command(name="show-arms", description="Display Coat of Arms for a player or NPC in another channel", guild_ids=['857097491131662346'])
 @option("name", description="Player or NPC")
@@ -90,6 +72,5 @@ async def show_arms(ctx, name: str, message: str, channel: str = "general"):
     await ch.send(message, file=discord.File(arms.path(name)))
     await ctx.send_response('Sent arms for {name} to {channel}'.format(name=name, channel=channel))
 
-#client.run(os.getenv('TOKEN'))
 if __name__ == "__main__":
     bot.run(os.getenv('TOKEN'))
