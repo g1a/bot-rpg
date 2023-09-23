@@ -8,13 +8,15 @@ Each server this bot runs on establishes one *campaign*. Campaigns contain colle
 
 - At the moment, `bot-rpg` has no persistence for campaign information; everything is reset when the bot is restarted. In the future, campaign information will be persisted to a backend server.
 
-- There is no permissions model; any user can run any command. In the future, Discord users will be classified as either a GM, player or visitor, and their role will limit what they can do in the context of the current campaign.
+- The permissions model is limited. The user who creates the campaign (runs the first slash command after the bot is restarted) becomes the administrator of the campaign, and all other users are "visitors". Most commands may be run as any user.
 
 ## Commands
 
 ### /set-campaign-time
 
 **Usage:** `/set-campaign-time` `iso-date`
+
+**Required Role:** Game Master
 
 Sets the current date and time in the campaign. When a campaign is first created, the campaign time defaults to noon on June first, 1494, which is a reasonable assumption for a Forgotten Realms campaign.
 
@@ -31,6 +33,8 @@ Legacy of Laensburg time: Fri 1494 Jun 01 at 4:30 PM
 ### /pass-time
 
 **Usage:** `/pass-time` `delta`
+
+**Required Role:** Game Master
 
 *Example:* 
 
@@ -61,6 +65,12 @@ Displays the Coat of Arms for the given family. Autocomplete provides a list of 
 **Usage:** `/show-arms family-name message channel`
 
 Works similarly to the `/arms` command, but allows the game master to enter the slash command in a private channel, and display the image in the campaign's general channel. This is useful for showing the arms of a family the party is not yet familiar with.
+
+### /as
+
+**Usage:** `/as role`
+
+Allows a priviledged user to masquerade as a less-priviledged user. Primarily for testing purposes.
 
 ## Installation
 
