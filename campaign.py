@@ -12,11 +12,11 @@ class Campaign:
 	def __init__(self, id, name):
 		self.id = id
 		self.name = name
-		self.base = '{project}/Campaigns/{id}'.format(project=pathlib.Path(__file__).parent.resolve(), id=self.id)
+		self.campaign_dir = '{project}/Campaigns/{id}'.format(project=pathlib.Path(__file__).parent.resolve(), id=self.id)
 		self.campaign_time = datetime.fromisoformat('1494-06-01 12:00:00')
 
 	def arms(self):
-		return Arms(self.base)
+		return Arms(self.campaign_dir)
 
 	def set_time(self, time: str):
 		self.campaign_time = datetime.fromisoformat(time)
