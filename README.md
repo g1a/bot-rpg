@@ -12,7 +12,9 @@ Each server this bot runs on establishes one *campaign*. Campaigns contain colle
 
 ## Commands
 
-- `/set-campaign-time` `iso-date`
+### /set-campaign-time
+
+**Usage:** `/set-campaign-time` `iso-date`
 
 Sets the current date and time in the campaign. When a campaign is first created, the campaign time defaults to noon on June first, 1494, which is a reasonable assumption for a Forgotten Realms campaign.
 
@@ -26,7 +28,9 @@ bot-rpg [bot]
 Legacy of Laensburg time: Fri 1494 Jun 01 at 4:30 PM
 ```
 
-- `/pass-time` `delta`
+### /pass-time
+
+**Usage:** `/pass-time` `delta`
 
 *Example:* 
 
@@ -40,18 +44,28 @@ Legacy of Laensburg time: Fri 1494 Jun 01 at 7:00 PM
 
 Adds the provided delta to the current time.
 
-- `/campaign-time`
+### /campaign-time
+
+**Usage:** `/campaign-time`
 
 Prints the current date and time in the campaign.
 
-- `/arms family-name`
+### /arms
+
+**Usage:** `/arms family-name`
 
 Displays the Coat of Arms for the given family. Autocomplete provides a list of known family names. (I am running a campaign where heraldry and familial relationships are important.)
 
-- `/show-arms family-name message channel`
+### /show-arms
+
+**Usage:** `/show-arms family-name message channel`
 
 Works similarly to the `/arms` command, but allows the game master to enter the slash command in a private channel, and display the image in the campaign's general channel. This is useful for showing the arms of a family the party is not yet familiar with.
 
 ## Installation
 
 tbd
+
+## Similar Projects
+
+One of the initial ideas for this project was to have a general-purpose RPG bot that would interface with some AI model to help quickly generate campaign information. The [gpt-discord-bot](https://github.com/openai/gpt-discord-bot) supports conversations with the text-davinci-003 model.
