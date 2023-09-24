@@ -20,7 +20,10 @@ class Campaign:
 		self.participants = Participants(creator)
 
 	def arms(self):
-		return Arms(self.campaign_dir)
+		# TEMPORARY: Let everyone see the Laensburg arms
+		everyoneIsLaensburgForNow = '{project}/Campaigns/857097491131662346'.format(project=pathlib.Path(__file__).parent.resolve().parent.resolve())
+		return Arms(everyoneIsLaensburgForNow)
+		#return Arms(self.campaign_dir)
 
 	def set_time(self, time: str):
 		self.campaign_time = datetime.fromisoformat(time)
