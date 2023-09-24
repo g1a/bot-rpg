@@ -84,11 +84,18 @@ You might want to skip the "configuration" step, and just use the following invi
 https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID_HERE&permissions=380104985664&scope=bot%20applications.commands
 ```
 
+Optional: set up a virtual environment for Python first.
+
+```
+$ python3 -m pip install virtualenv
+$ python3 -m venv env
+```
+
 Then, run your modified copy of bot-rpg on your local machine:
 
 ```
 $ export TOKEN="Discord bot's secret token"
-$ pip install -r requirements.txt
+$ python3 -m pip install -r requirements.txt
 $ python3 -m src.main
 ```
 
@@ -101,8 +108,6 @@ If you fork this repository, you might want to run this bot continuously. For lo
 During development, though, you might want to forgo the account creation process, and just run bot-rpg on some systemd-based Linux box. To do so, clone the project on the Linux system, run:
 
 ```
-$ git clone https://github.com/g1a/bot-rpg.git
-$ cd bot-rpg
 $ sudo make install
 $ export EDITOR=vi
 $ sudo -E systemctl edit bot-rpg.service
@@ -110,7 +115,7 @@ $ sudo -E systemctl edit bot-rpg.service
 Environment="TOKEN=YOUR_TOKEN_HERE"
 ```
 
-Then you should be able to use systemctl as usual to manage your bot as a service.
+Then you should be able to use systemctl as usual to manage your bot as a service (i.e. `systemctl bot-rpg start`).
 
 ## Similar Projects
 

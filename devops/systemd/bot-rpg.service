@@ -4,7 +4,8 @@ After=network.target mysql.service
 
 [Service]
 User=bot-rpg
-ExecStart=/usr/local/bin/bot-rpg
+WorkingDirectory=/home/bot-rpg/bot-rpg
+ExecStart=/usr/bin/python3 -m src.main
 Restart=on-failure
 
 [Install]
