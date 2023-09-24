@@ -72,10 +72,20 @@ Works similarly to the `/arms` command, but allows the game master to enter the 
 
 Allows a priviledged user to masquerade as a less-priviledged user. Primarily for testing purposes.
 
+## Local Development
+
+```
+$ pip install -r requirements.txt
+$ python3 -m src.main
+```
+
 ## Installation
 
 tbd
 
 ## Similar Projects
 
-One of the initial ideas for this project was to have a general-purpose RPG bot that would interface with some AI model to help quickly generate campaign information. The [gpt-discord-bot](https://github.com/openai/gpt-discord-bot) supports conversations with the text-davinci-003 model.
+One of the initial ideas for this project was to have a general-purpose RPG bot that would interface with some AI model to help quickly generate campaign information. There are a couple of projects that do something similar, but without an RPG focus. 
+
+- [chatGPT-discord-bot](https://github.com/Zero6992/chatGPT-discord-bot): Integrate ChatGPT, Bing or Bard with your Discord bot.
+- [gpt-discord-bot](https://github.com/openai/gpt-discord-bot): Supports conversations with the text-davinci-003 model.

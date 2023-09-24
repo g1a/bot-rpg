@@ -2,7 +2,7 @@ import os
 import os.path
 import pathlib
 
-from role_in_campaign import RoleInCampaign
+from src.role_in_campaign import RoleInCampaign
 
 class Participants:
 	def __init__(self, creator):

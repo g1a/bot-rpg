@@ -21,6 +21,7 @@ class Arms:
 	def all_visible(self):
 		files = os.listdir(self.base)
 		files = [f.replace('.png', '') for f in files if os.path.isfile(self.base+'/'+f)]
+		files.sort()
 		return files
 
 

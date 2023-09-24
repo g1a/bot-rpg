@@ -4,9 +4,9 @@ import pathlib
 import discord
 from discord import option
 
-from arms import Arms
-from campaign import Campaign
-from role_in_campaign import RoleInCampaign
+from src.arms import Arms
+from src.campaign import Campaign
+from src.role_in_campaign import RoleInCampaign
 
 campaigns = {}
 
@@ -28,7 +28,9 @@ def existing_campaign(guild, channel):
     key = "{guild}:{channel}".format(guild=guild.id, channel=channel.id)
     if key in campaigns:
         return campaigns[key]
-    return campaigns[guild.id]
+    if guild.id in campaigns:
+        return campaigns[guild.id]
+    return None
 
 bot = discord.Bot()
 
@@ -63,6 +65,9 @@ async def pass_time(ctx, delta: str):
 
 async def get_visible_arms(ctx: discord.AutocompleteContext):
     campaign = existing_campaign(ctx.interaction.guild, ctx.interaction.channel)
+    if not campaign:
+        print('no campaign')
+        return []
     arms = campaign.arms()
     return arms.all_visible()
 
