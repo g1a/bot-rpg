@@ -7,6 +7,7 @@ install-bin:
 	exit 1
 
 install-service: /etc/systemd/system
-	cp devops/systemd/bot_rpg.service /etc/systemd/system
+	cp devops/systemd/bot-rpg.service /etc/systemd/system
+	useradd bot-rpg
 
 install: install-bin install-service

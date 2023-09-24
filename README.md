@@ -101,10 +101,16 @@ If you fork this repository, you might want to run this bot continuously. For lo
 During development, though, you might want to forgo the account creation process, and just run bot-rpg on some systemd-based Linux box. To do so, clone the project on the Linux system, run:
 
 ```
+$ git clone https://github.com/g1a/bot-rpg.git
+$ cd bot-rpg
 $ sudo make install
+$ export EDITOR=vi
+$ sudo -E systemctl edit bot-rpg.service
+[Service]
+Environment="TOKEN=YOUR_TOKEN_HERE"
 ```
 
-Then you should be able to use systemctl as usual to manage your bot as a service. For example, you should be able to [use systemd to manage your bot's secret token as an environment variable](https://serverfault.com/questions/413397/how-to-set-environment-variable-in-systemd-service). (I haven't set this up yet, so the advice in this section is as of yet untested. I probably will have it running shortly, though.)
+Then you should be able to use systemctl as usual to manage your bot as a service.
 
 ## Similar Projects
 
