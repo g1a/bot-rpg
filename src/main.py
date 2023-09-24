@@ -71,7 +71,7 @@ async def get_visible_arms(ctx: discord.AutocompleteContext):
     arms = campaign.arms()
     return arms.all_visible()
 
-@bot.slash_command(name="arms", description="Show Coat of Arms for a player or NPC", guild_ids=['857097491131662346'])
+@bot.slash_command(name="arms", description="Show Coat of Arms for a player or NPC")
 async def arms(ctx, name: discord.Option(str, autocomplete=discord.utils.basic_autocomplete(get_visible_arms), description="Player or NPC")):
     campaign = get_campaign(ctx)
     arms = campaign.arms()
@@ -80,7 +80,7 @@ async def arms(ctx, name: discord.Option(str, autocomplete=discord.utils.basic_a
         return
     await ctx.send_response('Arms for {name}:'.format(name=name), file=discord.File(arms.path(name)))
 
-@bot.slash_command(name="show-arms", description="Display Coat of Arms for a player or NPC in another channel", guild_ids=['857097491131662346'])
+@bot.slash_command(name="show-arms", description="Display Coat of Arms for a player or NPC in another channel")
 @option("message", description="Message to attach above Coat of Arms")
 @option("channel", description="Channel to show Coat of Arms")
 async def show_arms(ctx, name: discord.Option(str, autocomplete=discord.utils.basic_autocomplete(get_visible_arms), description="Player or NPC"), message: str, channel: str = "general"):
