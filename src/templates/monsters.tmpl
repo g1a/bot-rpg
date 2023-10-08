@@ -1,0 +1,250 @@
+<style type="text/css" media="screen">
+
+.open5e hr.gold {
+	background: linear-gradient(orange, yellow, orange);
+	height: 6px;
+	width: 101%;
+	border: 1px solid #2f2112;
+	border-radius: 2px;
+	margin: 5px 0px 5px -3px;
+}
+
+.open5e hr.thick {
+	background: linear-gradient(to right, #a52a2a, white);
+	height: 3px;
+}
+
+.open5e hr.thin {
+	background: radial-gradient(black, #a52a2a);
+	height: 1px;
+}
+
+.open5e .body {
+	margin: 10px 5px 5px 8px;
+}
+
+.open5e h1 {
+	font-family: Mrs Eaves;
+	color: #58170D;
+	font-size: 3rem;
+	font-weight: bolder;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	margin: -10px 0px -5px 0px;
+}
+
+.open5e h2 {
+	font-family: sans-serif;
+	font-variant: small-caps;
+	font-size: 2rem;
+	font-weight: normal;
+	line-height: 1.4em;
+	text-transform: capitalize;
+	color: #58170D;
+	margin: 5px 0px -12px 0px;
+}
+
+.open5e .subtitle {
+	font-style: italic;
+}
+
+.open5e .subtitle span {
+	text-transform: lowercase;
+	font-weight: normal;
+}
+
+.open5e .single-list {
+	color: #58170D;
+}
+
+.open5e ul {
+	list-style-type: none;
+	margin-left: -38px;
+	margin-bottom: 10px;
+}
+
+.open5e li {
+	margin: 5px 0px -5px 0px !important;
+}
+
+.open5e .single-list span, .open5e .attributes span {
+	font-weight: bold;
+}
+
+.open5e .attributes {
+	display: inline-block;
+	color: #58170D;
+	font-size: 2rem;
+	width: 100%;
+	margin: 5px 0px 5px -15px;
+}
+
+.open5e .attr {
+	display: inline-block;
+	margin: 0px 0px 0px 45px;
+	text-align: center;
+}
+
+.open5e .attr-num {
+	display: inline-block;
+	margin: 0px 0px 0px -5px;
+}
+
+.open5e .traits span, .open5e .actions span, .open5e .reactions span {
+	font-weight: bolder;
+	font-style: italic;
+}
+
+.open5e .actions li, .open5e .traits li {
+	margin-bottom: 10px !important;
+}
+
+.open5e .legendary-actions span {
+    font-weight: bolder;
+    margin-right: 5px;
+}
+
+</style>
+
+{% macro labeled_modifier(label, modifier) -%}{% if modifier is not none %}{{ comma() }}{{ label }}{{ modifier_value_to_str(modifier) }}{% endif %}{%- endmacro %}
+
+{% macro labeled_section(label, value) %}
+	{% if value is not none and value|length %}
+		<li>
+			<span>{{label}}</span>
+			{{value}}
+		</li>
+	{% endif %}
+{% endmacro %}
+
+<div class="open5e">
+    <hr class="gold"/>
+    <div class="body">
+        <h1>{{name}}</h1>
+        <div class="subtitle">{{size}} <span>{{type}}{% if subtype|length %} ({{subtype}}){% endif %}, {{alignment}}</span></div>
+        <hr class="thick"/>
+        <div class="single-list">
+            <ul>
+                <li><span>Armor Class </span>{{armor_class}} ({{armor_desc}})</li>
+                <li><span>Hit Points </span>{{hit_points}} ({{hit_dice}})</li>
+                <li>
+                	<span>Speed </span>
+
+					{% set comma = joiner(", ") %}
+	                {%- for mode, value in speed.items() -%}
+	                	{{ comma() }}{% if mode != 'walk' %}{{mode.capitalize()}} {% endif %}{{value}} ft.
+	                {%- endfor -%}
+	            </li>
+            </ul>
+        </div>
+        <hr class="thick"/>
+        <div class="attributes">
+            <div class="attr"><span>STR</span><br>
+                <div class="attr-num">{{strength}} ({{attribute_modifier(strength)}})</div>
+            </div>
+            <div class="attr"><span>DEX</span><br>
+                <div class="attr-num">{{dexterity}} ({{attribute_modifier(dexterity)}})</div>
+            </div>
+            <div class="attr"><span>CON</span><br>
+                <div class="attr-num">{{constitution}} ({{attribute_modifier(constitution)}})</div>
+            </div>
+            <div class="attr"><span>INT</span><br>
+                <div class="attr-num">{{intelligence}} ({{attribute_modifier(intelligence)}})</div>
+            </div>
+            <div class="attr"><span>WIS</span><br>
+                <div class="attr-num">{{wisdom}} ({{attribute_modifier(wisdom)}})</div>
+            </div>
+            <div class="attr"><span>CHA</span><br>
+                <div class="attr-num">{{charisma}} ({{attribute_modifier(charisma)}})</div>
+            </div>
+        </div>
+        <hr class="thick"/>
+        <div class="single-list">
+            <ul>
+            	{% set saving_throws = dict() %}
+            	{% do saving_throws.update({'Str': strength_save}) %}
+            	{% do saving_throws.update({'Dex': dexterity_save}) %}
+            	{% do saving_throws.update({'Con': constitution_save}) %}
+            	{% do saving_throws.update({'Int': intelligence_save}) %}
+            	{% do saving_throws.update({'Wis': wisdom_save}) %}
+            	{% do saving_throws.update({'Cha': charisma_save}) %}
+
+            	{% if any(saving_throws.values()) %}
+                <li>
+                	<span>Saving Throws</span>
+
+					{% set comma = joiner(", ") %}
+                	{%- for save, value in saving_throws.items() -%}
+                		{{ labeled_modifier(save, value) }}
+				    {%- endfor -%}
+
+                </li>
+				{% endif %}
+
+            	{% if any(skills.values()) %}
+                <li>
+                	<span>Skills</span>
+
+                	{% set comma = joiner(", ") %}
+                	{%- for skill, value in skills.items() -%}
+                		{{ labeled_modifier(skill.capitalize(), value) }}
+				    {%- endfor -%}
+                </li>
+				{% endif %}
+
+                {{ labeled_section("Damage Resistances", damage_resistances)}}
+                {{ labeled_section("Damage Immunities", damage_immunities)}}
+                {{ labeled_section("Condition Immunities", condition_immunities)}}
+                {{ labeled_section("Senses", senses)}}
+                {{ labeled_section("Languages", languages)}}
+                {{ labeled_section("Challenge", challenge_rating)}}
+            </ul>
+        </div>
+        <hr class="thick"/>
+
+        {% if special_abilities is not none and special_abilities|length %}
+        <div class="traits">
+            <ul>
+                {% for ability in special_abilities %}
+                    <li><span>{{ability.name.capitalize()}}</span>. {{ability.desc}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+		{% endif %}
+
+        {% if actions is not none and actions|length %}
+        <div class="actions">
+            <h2>Actions</h2>
+            <hr class="thin"/>
+            <ul>
+                {% for action in actions %}
+	                <li><span>{{action.name}}.</span> {{ italicize_sentence_label(action.desc) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+		{% endif %}
+
+        {% if reactions is not none and reactions|length %}
+        <div class="reactions">
+            <ul>
+                {% for action in reactions %}
+	                <li><span>{{action.name}}.</span> {{ action.desc }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% if legendary_actions is not none and legendary_actions|length%}
+        <div class="legendary-actions">
+            <h2>Legendary Actions</h2>
+            <hr class="thin"/>
+            {{legendary_desc}}
+            <ul>
+                {% for action in legendary_actions %}
+	                <li><span>{{action.name}}.</span> {{ action.desc }}</li>
+                {% endfor %}            
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    <hr class="gold"/>
+</div>
