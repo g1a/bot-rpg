@@ -117,6 +117,11 @@ Environment="TOKEN=YOUR_TOKEN_HERE"
 
 Then you should be able to use systemctl as usual to manage your bot as a service (i.e. `systemctl bot-rpg start`).
 
+## Resources
+
+- [Parchment texture](https://www.deviantart.com/icycatelf/art/Certificate-Paper-Texture-265297800) by icycatelf
+- [Gold texture](https://www.deviantart.com/devirose81/art/Gold-Textures-Set-600147982) by devirose81
+
 ## Similar Projects
 
 One of the initial ideas for this project was to have a general-purpose RPG bot that would interface with some AI model to help quickly generate campaign information. There are a couple of projects that do something similar, but without an RPG focus. 

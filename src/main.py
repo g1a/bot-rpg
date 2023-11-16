@@ -3,7 +3,9 @@ import pathlib
 
 import discord
 from discord import option
+from html2image import Html2Image
 
+from src.open5e import open5e_render_html
 from src.arms import Arms
 from src.campaign import Campaign
 from src.role_in_campaign import RoleInCampaign
@@ -106,6 +108,14 @@ async def set_time(ctx, role: str):
         await ctx.send_response('You are not authorized to act as a {role}'.format(role=role), ephemeral=True)
         return
     await ctx.send_response('Set your acting role to {role}'.format(role=role), ephemeral=True)
+
+@bot.slash_command(name="5e", description="Query the Open5e API")
+@option("query", description="Thing to look up (for now, must be 'monsters/<name>')")
+async def open5e_query(ctx, query: str):
+    html = open5e_render_html(query)
+    hti = Html2Image(size=(1024,1024))
+    hti.screenshot(html_str=html, save_as='open5e_query.png')
+    await ctx.send_response(file=discord.File('open5e_query.png'))
 
 if __name__ == "__main__":
     bot.run(os.getenv('TOKEN'))
