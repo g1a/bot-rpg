@@ -88,7 +88,7 @@ Optional: set up a virtual environment for Python first.
 
 ```
 $ python3 -m pip install virtualenv
-$ python3 -m venv env
+$ python3 -m venv .venv
 ```
 
 Then, run your modified copy of bot-rpg on your local machine:
